@@ -1,6 +1,6 @@
 {
   "name": "japgar-logging",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "japgar-logging: no description",
   "main": "index.js",
   "scripts": {
