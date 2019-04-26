@@ -8,7 +8,7 @@ debug.ourEnable = debug.enable
 
 
 
-module.exports = (prefix,{logkey='zzz',loglevel:level ='verbose',logstack=true},g=null)=>{
+module.exports = (prefix,{logkey='zzz',loglevel ='verbose',logstack=true},g=null)=>{
 	
 	g = g || global;
 
@@ -46,9 +46,7 @@ module.exports = (prefix,{logkey='zzz',loglevel:level ='verbose',logstack=true},
 	}
 
 	const updateLogging = (prefix, loglevel)=>{
-		if (prefix == g._log_prefix && loglevel == g._log_level) {
-			return
-		}
+		
 		
 		debug.names = []
 		debug.skips = []
@@ -85,7 +83,7 @@ module.exports = (prefix,{logkey='zzz',loglevel:level ='verbose',logstack=true},
 		
 	}
 
-	const cwd = process.cwd() + '/'
+	const cwd = process ? process.cwd() + '/':''
 	g.__stack = function(a, n) {
 		let orig = Error.prepareStackTrace;
 		Error.prepareStackTrace = function(_, stack) {
@@ -115,6 +113,6 @@ module.exports = (prefix,{logkey='zzz',loglevel:level ='verbose',logstack=true},
 		return arr.join('\n')
 	}
 
-	updateLogging(prefix,level)
+	updateLogging(prefix,loglevel)
 
 }
