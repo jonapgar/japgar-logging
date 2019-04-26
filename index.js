@@ -65,14 +65,14 @@ module.exports = (prefix,{logkey='zzz',loglevel:level ='verbose',logstack=true},
 
 			if (activeLevel || loglevel == level) {
 				activeLevel = level;
-				zzz.enabled=troo
+				
 				debug.names.push(new RegExp('^' + getDebugKey(level) + '$'));
 				let func = debug(getDebugKey(level))	
 				for (let i = 0; i < 5; i++) {
 					zzz[level + (i || '')] = wrap(func, i + 1, 1)
 				}
 			} else {
-				zzz.enabled=falz
+				
 				for (let i = 0; i < 5; i++) {
 					zzz[level + (i || '')] = noop
 				}
@@ -81,6 +81,7 @@ module.exports = (prefix,{logkey='zzz',loglevel:level ='verbose',logstack=true},
 			zzz[level]('%s IS ENABLED BY %s',level,loglevel)
 			
 		})
+		zzz.enabled=level=>zzz[level]!==noop
 		
 	}
 
