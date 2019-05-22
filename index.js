@@ -34,23 +34,20 @@ const __stack = function(a, n) {
 	}
 	return arr.join('\n')
 }
-const wrap = (func, depth, length)=>{
+const wrap = (func, depth, length,logstack)=>{
 
 	return (...args)=>{
-
-		
 		
 		args = args.map(a=>{
 			return (a instanceof Error) && a.stack ? `\n${a.stack}\n${a}` : a
 		})
-		
-		if (typeof args[0] !== 'string') {
-			args.unshift(args.length > 1 ? '%o' : '')
+		if (logstack) {
+			if (typeof args[0] !== 'string') {
+				args.unshift('')
+			}
+			args[0] = '(%s) ' + args[0]
+			args.splice(1, 0, __stack(depth, length));
 		}
-
-		args[0] = '(%s) ' + args[0]
-		args.splice(1, 0, __stack(depth, length));
-
 		return func(...args)
 	}
 }
@@ -79,7 +76,7 @@ module.exports = (prefix,{logkey='zzz',loglevel ='verbose',logstack=true},g=null
 			debug.names.push(new RegExp('^' + debugKey + '$'));
 			let func = debug(debugKey)	
 			for (let i = 0; i < 5; i++) {
-				zzz[level + (i || '')] = logstack ? wrap(func,i + 1, 1):func
+				zzz[level + (i || '')] = wrap(func,i + 1, 1,logstack)
 			}
 		} else {
 			
