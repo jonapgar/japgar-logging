@@ -38,8 +38,8 @@ const wrap = (func, depth, length,logstack)=>{
 
 	return (...args)=>{
 		
-		args = args.map(a=>{
-			return (a instanceof Error) && a.stack ? `${a}\n${a.stack}`: a
+		args = args.map((a,i)=>{
+			return (a instanceof Error) && a.stack ? `${i>0 ? '\n':''}${a}\n${a.stack}`: a
 		})
 		
 		if (logstack) {
