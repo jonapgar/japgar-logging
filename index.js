@@ -39,8 +39,9 @@ const wrap = (func, depth, length,logstack)=>{
 	return (...args)=>{
 		
 		args = args.map(a=>{
-			return (a instanceof Error) && a.stack ? `\n${a.stack}\n${a}` : a
+			return (a instanceof Error) && a.stack ? `${a}\n${a.stack}`: a
 		})
+		
 		if (logstack) {
 			if (typeof args[0] !== 'string') {
 				args.unshift('')
